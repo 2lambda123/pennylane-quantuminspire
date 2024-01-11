@@ -41,7 +41,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     'sphinx.ext.viewcode',
     "sphinx_automodapi.automodapi",
-    'edit_on_github'
+    'edit_on_github', 'sphinx.ext.intersphinx'
 ]
 
 autosummary_generate = True
