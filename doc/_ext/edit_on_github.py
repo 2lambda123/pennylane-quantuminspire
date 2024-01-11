@@ -23,19 +23,19 @@ def html_page_context(app, pagename, templatename, context, doctree):
     if templatename != 'page.html':
         return
 
-    if not app.config.edit_on_github_project:
+    if not (app.config.edit_on_github_project and app.config.edit_on_github_branch):
         warnings.warn("edit_on_github_project not specified")
         return
 
-    if not doctree:
+    if not (doctree and len(doctree.children) > 0):
         return
     
     path = os.path.relpath(doctree.get('source'), app.builder.srcdir)
-    show_url = get_github_url(app, 'blob', path)
+    show_url = get_github_url(app, 'tree', path)
     edit_url = get_github_url(app, 'edit', path)
 
-    context['show_on_github_url'] = show_url
-    context['edit_on_github_url'] = edit_url
+    context['show_url'] = show_url
+    context['edit_url'] = edit_url
 
 
 def setup(app):
