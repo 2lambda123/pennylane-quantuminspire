@@ -236,8 +236,7 @@ def delete_qi_projects() -> None:
     Operating the device will create a lot of QI projects making future runs possibly slower. With this method
     the projects can be deleted when a token is available (used in the integration tests pipelines).
     """
-    token = load_account()
-    if token is not None:
+    if (token := load_account()) is not None:
         qi_authentication = get_token_authentication(token)
         QI.set_authentication(qi_authentication)
         api = QI.get_api()
