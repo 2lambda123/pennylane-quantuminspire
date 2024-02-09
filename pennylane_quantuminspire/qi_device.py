@@ -103,6 +103,31 @@ class QuantumInspireDevice(QiskitDevice, ABC):  # type: ignore
         shots: int = 1024,
         **kwargs: Dict[str, Any],
     ):
+        """Initializes a quantum device for running quantum circuits on Quantum Inspire.
+        Parameters:
+            - wires (Union[int, Iterable[int], Iterable[str]]): The number of wires, or an iterable of wire labels, to be used in the circuit.
+            - backend (str): The backend to be used for running the circuit. Defaults to "QX single-node simulator".
+            - shots (int): The number of times the circuit should be run. Defaults to 1024.
+            - **kwargs (Dict[str, Any]): Additional keyword arguments to be passed to the Quantum Inspire API.
+        Returns:
+            - None: This function does not return anything.
+        Processing Logic:
+            - Establishes a connection to the Quantum Inspire API.
+            - Adjusts the wires based on the backend type.
+            - Checks the backend type, wires, and shots for compatibility.
+            - Removes unsupported operations from the list of operations.
+            - Initializes the base class QiskitDevice with the specified parameters.
+        Example:
+            >>> device = QIQuantumDevice(wires=3, backend="QX single-node simulator", shots=1000)
+            >>> device.operations
+            ['Measure', 'PauliX', 'PauliY', 'PauliZ', 'RX', 'RY', 'RZ', 'S', 'T', 'H', 'CNOT', 'SWAP', 'Toffoli', 'PhaseShift', 'CPhaseShift', 'QubitStateVector']
+            >>> device.num_wires
+            3
+            >>> device.backend
+            'QX single-node simulator'
+            >>> device.shots
+            1000"""
+        
         # Connection to Quantum Inspire
         self._connect(kwargs)
         backend_type: Dict[str, Any] = QI.get_api().get_backend_type(backend)
